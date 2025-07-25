@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../constants.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text_field.dart';
-import 'home_page.dart';
+import 'package:login_app_test/features/home/view/home_page.dart';
+import '../../../core/constants.dart';
+import 'widgets/custom_button.dart';
+import 'widgets/custom_text_field.dart';
 import 'register_page.dart';
 
 class LoginPage extends StatelessWidget {

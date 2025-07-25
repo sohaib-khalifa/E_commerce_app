@@ -1,9 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import '../constants.dart';
-import '../widgets/custom_button.dart';
-import '../widgets/custom_text_field.dart';
+import '../../../core/constants.dart';
+import 'widgets/custom_button.dart';
+import 'widgets/custom_text_field.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatelessWidget {
