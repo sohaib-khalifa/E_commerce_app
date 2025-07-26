@@ -1,4 +1,3 @@
-// import 'package:ecommerce/model/model.dart';
 import 'package:login_app_test/features/products/models/product_model.dart';
 
 class FavoriteService {

@@ -1,11 +1,7 @@
-
-
-// import 'package:ecommerce/services/favourite_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_app_test/features/favorites/providers/favorites_provider.dart';
 
-// Favorites screen using Riverpod for state management [B]
 class FavoritesPage extends ConsumerWidget {
   const FavoritesPage({super.key});
 

@@ -1,6 +1,6 @@
 import 'package:realm/realm.dart';
 
-part 'realm_product_model.realm.dart'; // ✅ هيتولد تلقائيًا
+part 'realm_product_model.realm.dart'; 
 
 @RealmModel()
 class _RealmProduct {

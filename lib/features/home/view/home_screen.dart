@@ -48,7 +48,6 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  /// ✅ دي اللي كانت ناقصة، هتجيب الكاتيجوريز من الريبو
   Future<List<String>> getCategories() async {
     return await CategoriesRepository.fetchCategories();
   }

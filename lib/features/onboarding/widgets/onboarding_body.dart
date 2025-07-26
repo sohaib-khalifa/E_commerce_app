@@ -46,7 +46,6 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
 
         const SizedBox(height: 30),
 
-        // PageView للصور
         Expanded(
           child: CustomPageView(controller: _pageController),
         ),
@@ -58,7 +57,6 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
 
         const SizedBox(height: 30),
 
-        // زر Next
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: CustomGeneralButton(
@@ -85,7 +83,6 @@ class _OnBoardingBodyState extends State<OnBoardingBody> {
   void initState() {
     super.initState();
 
-    // نتابع التغيير في الصفحة
     _pageController.addListener(() {
       int newPage = _pageController.page!.round();
       if (newPage != _currentPage) {

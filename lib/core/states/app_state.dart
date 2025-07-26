@@ -1,4 +1,3 @@
-import 'package:login_app_test/features/products/models/product_model.dart';
 import 'package:login_app_test/features/products/models/realm_product_model.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:realm/realm.dart';

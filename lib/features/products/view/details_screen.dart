@@ -5,40 +5,33 @@ import 'package:login_app_test/features/cart/providers/cart_provider.dart';
 import 'package:login_app_test/features/cart/view/cart_screen.dart';
 import 'package:login_app_test/features/favorites/providers/favorites_provider.dart';
 
-// Product details screen with cart and favorites functionality [B]
 class Details extends ConsumerWidget {
   final Product product;
   const Details({super.key, required this.product});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Watch if product is in favorites [B]
     final isFavorite = ref.watch(isFavoriteProvider(product));
-    // Watch cart items count for badge [B]
     final cartItemCount = ref.watch(cartItemCountProvider);
 
     return Scaffold(
       appBar: AppBar(
         title: Text(product.title),
         actions: [
-          // Favorites button with heart icon [B]
           IconButton(
             icon: Icon(
               isFavorite ? Icons.favorite : Icons.favorite_border,
               color: isFavorite ? Colors.red : null,
             ),
             onPressed: () {
-              // Toggle favorite status [B]
               ref.read(favoritesProvider.notifier).toggleFavorite(product);
             },
           ),
-          // Cart button with badge [B]
           Stack(
             children: [
               IconButton(
                 icon: const Icon(Icons.shopping_cart),
                 onPressed: () {
-                  // Navigate to cart screen [B]
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (_) => const CartPage()),
@@ -83,13 +76,11 @@ class Details extends ConsumerWidget {
             Text('\$${product.price}', style: const TextStyle(fontSize: 20)),
             Text(product.description, style: const TextStyle(fontSize: 20)),
             
-            // Add to cart button [B]
             const SizedBox(height: 20),
             SizedBox(
               width: double.infinity,
               child: ElevatedButton.icon(
                 onPressed: () {
-                  // Add product to cart [B]
                   ref.read(cartProvider.notifier).addToCart(product);
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(

@@ -20,7 +20,6 @@ class _SplashViewState extends State<SplashView>
   void initState() {
     super.initState();
 
-    // ✅ إعداد الانيميشن (Fade In / Fade Out)
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
@@ -31,10 +30,8 @@ class _SplashViewState extends State<SplashView>
       end: 1,
     ).animate(_animationController);
 
-    // ✅ تكرار الأنيميشن ذهاب وعودة
     _animationController.repeat(reverse: true);
 
-    // ✅ بعد 3 ثواني هينتقل إلى OnBoardingView
     Future.delayed(const Duration(seconds: 5), () {
       // Navigator.pushReplacement(
       //   context,
@@ -48,7 +45,7 @@ class _SplashViewState extends State<SplashView>
 
   @override
   void dispose() {
-    _animationController.dispose(); // ✅ تنظيف الـ Animation
+    _animationController.dispose(); 
     super.dispose();
   }
 
@@ -60,7 +57,6 @@ class _SplashViewState extends State<SplashView>
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // ✅ نص بيتحرك بفيد
             FadeTransition(
               opacity: _fadeAnimation,
               child: const Text(
@@ -74,7 +70,6 @@ class _SplashViewState extends State<SplashView>
             ),
             const SizedBox(height: 30),
 
-            // ✅ صورة السبلاتش
             SvgPicture.asset('assets/images/online-shopping.svg', width: 400),
           ],
         ),

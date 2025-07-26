@@ -4,18 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:login_app_test/features/cart/providers/cart_provider.dart';
 import 'package:login_app_test/features/products/models/product_model.dart';
 
-// Cart screen using Riverpod for state management [B]
 class CartPage extends ConsumerWidget {
   const CartPage({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Watch cart items from provider [B]
     final cartItems = ref.watch(cartProvider);
-    // Watch cart total from provider [B]
     final totalCost = ref.watch(cartTotalProvider);
 
-    // Handle checkout process [B]
     void checkout() {
       showDialog(
         context: context,
@@ -25,8 +21,8 @@ class CartPage extends ConsumerWidget {
           actions: [
             TextButton(
               onPressed: () {
-                ref.read(cartProvider.notifier).clearCart(); // Clear cart using provider [B]
-                Navigator.pop(context); // Close dialog [B]
+                ref.read(cartProvider.notifier).clearCart(); 
+                Navigator.pop(context); 
               },
               child: const Text('OK'),
             ),
@@ -37,7 +33,7 @@ class CartPage extends ConsumerWidget {
 
     // Handle item removal [B]
     void removeItem(Product product) {
-      ref.read(cartProvider.notifier).removeFromCart(product); // Remove item using provider [B]
+      ref.read(cartProvider.notifier).removeFromCart(product); 
     }
 
     return Scaffold(
@@ -57,7 +53,7 @@ class CartPage extends ConsumerWidget {
                         subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () => removeItem(product), // Remove item on tap [B]
+                          onPressed: () => removeItem(product), 
                         ),
                       );
                     },
@@ -82,7 +78,7 @@ class CartPage extends ConsumerWidget {
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
-                        onPressed: checkout, // Handle checkout [B]
+                        onPressed: checkout, 
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                         ),
