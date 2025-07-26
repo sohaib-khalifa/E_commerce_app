@@ -1,14 +1,78 @@
 import 'package:login_app_test/features/products/models/product_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_app_test/features/cart/providers/cart_provider.dart';
+import 'package:login_app_test/features/cart/view/cart_screen.dart';
+import 'package:login_app_test/features/favorites/providers/favorites_provider.dart';
 
-class Details extends StatelessWidget {
+// Product details screen with cart and favorites functionality [B]
+class Details extends ConsumerWidget {
   final Product product;
   const Details({super.key, required this.product});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch if product is in favorites [B]
+    final isFavorite = ref.watch(isFavoriteProvider(product));
+    // Watch cart items count for badge [B]
+    final cartItemCount = ref.watch(cartItemCountProvider);
+
     return Scaffold(
-      appBar: AppBar(title: Text(product.title)),
+      appBar: AppBar(
+        title: Text(product.title),
+        actions: [
+          // Favorites button with heart icon [B]
+          IconButton(
+            icon: Icon(
+              isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: isFavorite ? Colors.red : null,
+            ),
+            onPressed: () {
+              // Toggle favorite status [B]
+              ref.read(favoritesProvider.notifier).toggleFavorite(product);
+            },
+          ),
+          // Cart button with badge [B]
+          Stack(
+            children: [
+              IconButton(
+                icon: const Icon(Icons.shopping_cart),
+                onPressed: () {
+                  // Navigate to cart screen [B]
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const CartPage()),
+                  );
+                },
+              ),
+              if (cartItemCount > 0)
+                Positioned(
+                  right: 8,
+                  top: 8,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: BoxDecoration(
+                      color: Colors.red,
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    constraints: const BoxConstraints(
+                      minWidth: 16,
+                      minHeight: 16,
+                    ),
+                    child: Text(
+                      '$cartItemCount',
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 10,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -18,6 +82,31 @@ class Details extends StatelessWidget {
             Text(product.title, style: const TextStyle(fontSize: 30)),
             Text('\$${product.price}', style: const TextStyle(fontSize: 20)),
             Text(product.description, style: const TextStyle(fontSize: 20)),
+            
+            // Add to cart button [B]
+            const SizedBox(height: 20),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                onPressed: () {
+                  // Add product to cart [B]
+                  ref.read(cartProvider.notifier).addToCart(product);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text('${product.title} added to cart'),
+                      duration: const Duration(seconds: 2),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.add_shopping_cart),
+                label: const Text('Add to Cart'),
+                style: ElevatedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                ),
+              ),
+            ),
+            
+            const SizedBox(height: 20),
             Table(
               border: TableBorder.all(color: Colors.grey.shade300),
               columnWidths: const {

@@ -1,65 +1,45 @@
 
 import 'package:flutter/material.dart';
-import 'package:login_app_test/core/services/cart_service.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:login_app_test/features/cart/providers/cart_provider.dart';
 import 'package:login_app_test/features/products/models/product_model.dart';
-// import 'package:ecommerce/services/cart_service.dart';
-// import 'package:ecommerce/model/model.dart';
 
-
-
- List<Product> cartItems = [];
-
-class CartPage extends StatefulWidget {
+// Cart screen using Riverpod for state management [B]
+class CartPage extends ConsumerWidget {
   const CartPage({super.key});
 
   @override
-  State<CartPage> createState() => _CartPageState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    // Watch cart items from provider [B]
+    final cartItems = ref.watch(cartProvider);
+    // Watch cart total from provider [B]
+    final totalCost = ref.watch(cartTotalProvider);
 
-class _CartPageState extends State<CartPage> {
- 
+    // Handle checkout process [B]
+    void checkout() {
+      showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+          title: const Text('Checkout Complete'),
+          content: Text('You have purchased ${cartItems.length} items for \$${totalCost.toStringAsFixed(2)}'),
+          actions: [
+            TextButton(
+              onPressed: () {
+                ref.read(cartProvider.notifier).clearCart(); // Clear cart using provider [B]
+                Navigator.pop(context); // Close dialog [B]
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
 
-  @override
-  void initState() {
-    super.initState();
-    cartItems = CartService.getCartItems();
-  }
+    // Handle item removal [B]
+    void removeItem(Product product) {
+      ref.read(cartProvider.notifier).removeFromCart(product); // Remove item using provider [B]
+    }
 
-  double get totalCost {
-    return cartItems.fold(0, (sum, item) => sum + item.price);
-  }
-
-  void checkout() {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text('Checkout Complete'),
-        content: Text('You have purchased ${cartItems.length} items for \$${totalCost.toStringAsFixed(2)}'),
-        actions: [
-          TextButton(
-            onPressed: () {
-              CartService.clearCart();
-              Navigator.pop(context); // Close dialog
-              setState(() {
-                cartItems = [];
-              });
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void removeItem(Product product) {
-    setState(() {
-      CartService.removeFromCart(product);
-      cartItems = CartService.getCartItems();
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('My Cart')),
       body: cartItems.isEmpty
@@ -77,7 +57,7 @@ class _CartPageState extends State<CartPage> {
                         subtitle: Text('\$${product.price.toStringAsFixed(2)}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.delete),
-                          onPressed: () => removeItem(product),
+                          onPressed: () => removeItem(product), // Remove item on tap [B]
                         ),
                       );
                     },
@@ -102,7 +82,7 @@ class _CartPageState extends State<CartPage> {
                       ),
                       const SizedBox(height: 10),
                       ElevatedButton(
-                        onPressed: checkout,
+                        onPressed: checkout, // Handle checkout [B]
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                         ),

@@ -1,5 +1,3 @@
-
-
 // import 'package:flutter/material.dart';
 
 // class CustomFormTextField extends StatelessWidget {
@@ -53,11 +51,11 @@ class CustomFormTextField extends StatelessWidget {
   final Function(String)? onChanged;
 
   const CustomFormTextField({
-    Key? key,
+    super.key,
     this.hintText,
     this.onChanged,
     this.obscureText = false,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -84,21 +82,14 @@ class CustomFormTextField extends StatelessWidget {
       onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
-        hintStyle: const TextStyle(
-          color: Colors.white,
-        ),
+        hintStyle: const TextStyle(color: Colors.white),
         enabledBorder: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.white,
-          ),
+          borderSide: BorderSide(color: Colors.white),
         ),
         border: const OutlineInputBorder(
-          borderSide: BorderSide(
-            color: Colors.white,
-          ),
+          borderSide: BorderSide(color: Colors.white),
         ),
       ),
     );
   }
 }
-
