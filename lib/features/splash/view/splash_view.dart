@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:login_app_test/features/onboarding/view/onboarding_view.dart';
 
 class SplashView extends StatefulWidget {
@@ -25,14 +26,16 @@ class _SplashViewState extends State<SplashView>
       duration: const Duration(seconds: 2),
     );
 
-    _fadeAnimation =
-        Tween<double>(begin: 0.3, end: 1).animate(_animationController);
+    _fadeAnimation = Tween<double>(
+      begin: 0.3,
+      end: 1,
+    ).animate(_animationController);
 
     // ✅ تكرار الأنيميشن ذهاب وعودة
     _animationController.repeat(reverse: true);
 
     // ✅ بعد 3 ثواني هينتقل إلى OnBoardingView
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 5), () {
       // Navigator.pushReplacement(
       //   context,
       //   MaterialPageRoute(
@@ -52,7 +55,7 @@ class _SplashViewState extends State<SplashView>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF69A03A),
+      backgroundColor: Colors.blue,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -72,10 +75,7 @@ class _SplashViewState extends State<SplashView>
             const SizedBox(height: 30),
 
             // ✅ صورة السبلاتش
-            Image.asset(
-              'assets/images/splash_view_image.png',
-              width: 250,
-            ),
+            SvgPicture.asset('assets/images/online-shopping.svg', width: 400),
           ],
         ),
       ),
